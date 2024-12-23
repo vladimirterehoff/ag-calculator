@@ -8,35 +8,49 @@ export const Hero = () => {
   };
 
   return (
-    <div className="relative min-h-[60vh] bg-navy text-white flex items-center">
-      <div className="container mx-auto px-4 py-12">
-        <div className="flex flex-col lg:flex-row items-center gap-12">
+    <div className="relative min-h-[80vh] bg-navy text-white flex items-center">
+      <div className="container mx-auto px-4 py-16">
+        <div className="flex flex-col lg:flex-row items-center gap-16">
           <div className="lg:w-1/2 animate-fade-up">
-            <span className="inline-block px-4 py-2 rounded-full bg-pink/20 text-pink mb-6 text-sm">
-              AI-Powered Cost Calculator
-            </span>
-            <h1 className="text-4xl lg:text-5xl font-bold mb-6">
+            <div className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-pink/20 text-pink mb-8">
+              <code className="text-lg">&lt;/&gt;</code>
+              <span className="text-lg font-medium">AI-Powered Cost Calculator</span>
+            </div>
+            
+            <h1 className="text-5xl lg:text-6xl font-bold mb-8 leading-tight">
               Calculate Your{" "}
-              <span className="text-pink">Project Cost</span> in Minutes
+              <span className="text-pink">Project Cost</span>{" "}
+              in Minutes
             </h1>
-            <p className="text-lg mb-8 text-gray-300">
+            
+            <p className="text-xl mb-10 text-gray-300 leading-relaxed max-w-2xl">
               Get accurate estimates powered by AI analysis of thousands of successful
               projects. Make informed decisions with real-time insights.
             </p>
+            
             <Button
               onClick={scrollToCalculator}
-              className="bg-pink hover:bg-pink-light text-white px-8 py-6 rounded-lg text-lg flex items-center gap-2 transition-colors"
+              className="bg-pink hover:bg-pink-light text-white px-8 py-7 rounded-xl text-lg flex items-center gap-3 transition-all hover:translate-y-[-2px]"
             >
               Start Calculating
-              <ArrowDown className="w-5 h-5" />
+              <ArrowDown className="w-6 h-6" />
             </Button>
           </div>
+          
           <div className="lg:w-1/2 relative">
+            {/* Gradient background effect */}
+            <div className="absolute inset-0 bg-gradient-to-r from-navy/20 to-pink/20 rounded-3xl transform rotate-3" />
+            
+            {/* Image container with effects */}
             <div className="relative transform hover:scale-[1.02] transition-transform duration-300">
-              <div className="absolute inset-0 bg-gradient-to-r from-pink/10 via-transparent to-pink/10 rounded-2xl" />
+              {/* Glow effect */}
               <div className="absolute -inset-1 bg-gradient-to-r from-pink/20 via-transparent to-pink/20 blur-lg opacity-50" />
+              
+              {/* Image overlay gradient */}
+              <div className="absolute inset-0 bg-gradient-to-r from-pink/10 via-transparent to-pink/10 rounded-2xl" />
+              
               <img
-                src="/lovable-uploads/ae207ca3-651a-43cb-a1ed-97ee59384b15.png"
+                src="/lovable-uploads/d4570f2d-b030-4b7f-8c2a-8ffa1d835897.png"
                 alt="Analytics Dashboard"
                 className="relative w-full h-auto rounded-2xl shadow-2xl"
               />
@@ -44,6 +58,8 @@ export const Hero = () => {
           </div>
         </div>
       </div>
+      
+      {/* Background gradient overlay */}
       <div className="absolute inset-0 bg-gradient-to-r from-navy via-navy/90 to-transparent z-[-1]" />
     </div>
   );
