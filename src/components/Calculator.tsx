@@ -3,6 +3,7 @@ import { useToast } from "@/hooks/use-toast";
 import { DomainSelection } from "./calculator/DomainSelection";
 import { FeatureSelection } from "./calculator/FeatureSelection";
 import { ContactForm } from "./calculator/ContactForm";
+import { PlatformSelection } from "./calculator/PlatformSelection";
 
 const features = {
   ecommerce: {
@@ -21,6 +22,7 @@ const features = {
 };
 
 export const Calculator = () => {
+  const [selectedPlatform, setSelectedPlatform] = useState("");
   const [selectedDomain, setSelectedDomain] = useState("");
   const [selectedFeatures, setSelectedFeatures] = useState<string[]>([]);
   const [formData, setFormData] = useState({
@@ -28,8 +30,14 @@ export const Calculator = () => {
     phone: "",
     email: "",
     linkedin: "",
+    termsAccepted: false,
+    newsletter: false,
   });
   const { toast } = useToast();
+
+  const handlePlatformSelect = (platform: string) => {
+    setSelectedPlatform(platform);
+  };
 
   const handleDomainSelect = (domainId: string) => {
     setSelectedDomain(domainId);
@@ -50,10 +58,10 @@ export const Calculator = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!formData.name || !formData.email) {
+    if (!formData.name || !formData.email || !formData.termsAccepted) {
       toast({
         title: "Error",
-        description: "Please fill in all required fields.",
+        description: "Please fill in all required fields and accept the Terms and Conditions.",
         variant: "destructive",
       });
       return;
@@ -73,6 +81,10 @@ export const Calculator = () => {
         </h2>
         <div className="flex flex-col lg:flex-row gap-8">
           <div className="lg:w-[70%]">
+            <PlatformSelection
+              selectedPlatform={selectedPlatform}
+              onPlatformSelect={handlePlatformSelect}
+            />
             <DomainSelection
               selectedDomain={selectedDomain}
               onDomainSelect={handleDomainSelect}

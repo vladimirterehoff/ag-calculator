@@ -1,12 +1,15 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Checkbox } from "@/components/ui/checkbox";
 
 interface FormData {
   name: string;
   phone: string;
   email: string;
   linkedin: string;
+  termsAccepted: boolean;
+  newsletter: boolean;
 }
 
 interface ContactFormProps {
@@ -18,13 +21,11 @@ interface ContactFormProps {
 export const ContactForm = ({ formData, onFormChange, onSubmit }: ContactFormProps) => {
   return (
     <div className="bg-white p-8 rounded-xl shadow-lg w-full max-w-md">
-      <h3 className="text-2xl font-semibold mb-6 text-navy">
-        Where do we send the document?
+      <h3 className="text-2xl font-semibold mb-4 text-navy">
+        Your document is almost ready!
       </h3>
       <p className="text-gray-600 mb-6">
-        Our AI is already working on crafting the project roadmap, plan and
-        estimate for you. Just leave your details so you can receive the result.
-        Normally you should get it within 10-15 mins.
+        Just fill in your contact details, and we'll send it within 10-15 mins:
       </p>
       <form onSubmit={onSubmit} className="space-y-4">
         <div>
@@ -37,7 +38,7 @@ export const ContactForm = ({ formData, onFormChange, onSubmit }: ContactFormPro
           />
         </div>
         <div>
-          <Label htmlFor="phone">Phone Number (optional)</Label>
+          <Label htmlFor="phone">Phone Number</Label>
           <Input
             id="phone"
             value={formData.phone}
@@ -55,12 +56,45 @@ export const ContactForm = ({ formData, onFormChange, onSubmit }: ContactFormPro
           />
         </div>
         <div>
-          <Label htmlFor="linkedin">LinkedIn Profile URL (optional)</Label>
+          <Label htmlFor="linkedin">LinkedIn Profile URL</Label>
           <Input
             id="linkedin"
             value={formData.linkedin}
             onChange={(e) => onFormChange({ linkedin: e.target.value })}
           />
+        </div>
+        <div className="space-y-2">
+          <div className="flex items-center space-x-2">
+            <Checkbox
+              id="terms"
+              checked={formData.termsAccepted}
+              onCheckedChange={(checked) =>
+                onFormChange({ termsAccepted: checked as boolean })
+              }
+              required
+            />
+            <label
+              htmlFor="terms"
+              className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+            >
+              I agree to the Terms and Conditions *
+            </label>
+          </div>
+          <div className="flex items-center space-x-2">
+            <Checkbox
+              id="newsletter"
+              checked={formData.newsletter}
+              onCheckedChange={(checked) =>
+                onFormChange({ newsletter: checked as boolean })
+              }
+            />
+            <label
+              htmlFor="newsletter"
+              className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+            >
+              Subscribe to our newsletter with latest blog articles and industry trends
+            </label>
+          </div>
         </div>
         <Button
           type="submit"
