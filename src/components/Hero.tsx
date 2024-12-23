@@ -1,4 +1,4 @@
-import { ArrowDown } from "lucide-react";
+import { ArrowDown, Code2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 export const Hero = () => {
@@ -13,7 +13,7 @@ export const Hero = () => {
         <div className="flex flex-col lg:flex-row items-center gap-16">
           <div className="lg:w-1/2 animate-fade-up">
             <div className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-pink/20 text-pink mb-8">
-              <code className="text-lg">&lt;/&gt;</code>
+              <Code2 className="w-6 h-6" />
               <span className="text-lg font-medium">AI-Powered Cost Calculator</span>
             </div>
             
