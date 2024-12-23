@@ -56,6 +56,20 @@ export const Calculator = () => {
     setFormData((prev) => ({ ...prev, ...data }));
   };
 
+  const resetAllSelections = () => {
+    setSelectedPlatform("");
+    setSelectedDomain("");
+    setSelectedFeatures([]);
+    setFormData({
+      name: "",
+      phone: "",
+      email: "",
+      linkedin: "",
+      termsAccepted: false,
+      newsletter: false,
+    });
+  };
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!formData.name || !formData.email || !formData.termsAccepted) {
@@ -102,6 +116,7 @@ export const Calculator = () => {
               formData={formData}
               onFormChange={handleFormChange}
               onSubmit={handleSubmit}
+              onSuccess={resetAllSelections}
             />
           </div>
         </div>

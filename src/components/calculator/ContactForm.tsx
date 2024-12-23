@@ -16,12 +16,14 @@ interface ContactFormProps {
   };
   onFormChange: (data: Partial<ContactFormProps["formData"]>) => void;
   onSubmit: (e: React.FormEvent) => void;
+  onSuccess: () => void;
 }
 
 export const ContactForm = ({
   formData,
   onFormChange,
   onSubmit,
+  onSuccess,
 }: ContactFormProps) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
@@ -38,6 +40,7 @@ export const ContactForm = ({
     
     setIsSubmitting(false);
     setIsSuccess(true);
+    onSuccess(); // Reset all selections
   };
 
   if (isSuccess) {
