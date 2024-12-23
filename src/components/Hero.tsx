@@ -17,10 +17,10 @@ export const Hero = () => {
               <span className="text-lg font-medium">AI-Powered Cost Calculator</span>
             </div>
             
-            <h1 className="text-5xl lg:text-6xl font-bold mb-8 leading-tight">
-              Calculate Your{" "}
-              <span className="text-pink">Project Cost</span>{" "}
-              in Minutes
+            <h1 className="text-5xl lg:text-6xl font-bold mb-8 leading-tight flex flex-col">
+              <span>Calculate Your</span>
+              <span className="text-pink">Project Cost</span>
+              <span>in Minutes</span>
             </h1>
             
             <p className="text-xl mb-10 text-gray-300 leading-relaxed max-w-2xl">
@@ -30,7 +30,7 @@ export const Hero = () => {
             
             <Button
               onClick={scrollToCalculator}
-              className="bg-pink hover:bg-pink-light text-white px-8 py-7 rounded-xl text-lg flex items-center gap-3 transition-all hover:translate-y-[-2px]"
+              className="bg-pink hover:bg-pink-dark text-white px-10 py-8 rounded-xl text-xl flex items-center gap-3 transition-colors"
             >
               Start Calculating
               <ArrowDown className="w-6 h-6" />

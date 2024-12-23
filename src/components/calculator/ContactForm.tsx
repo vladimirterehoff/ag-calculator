@@ -82,7 +82,16 @@ export const ContactForm = ({
                 required
               />
               <Label htmlFor="terms" className="text-sm">
-                I agree to the Terms and Conditions *
+                I agree to the{" "}
+                <a 
+                  href="https://attractgroup.com/privacy-policy/" 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  className="text-pink hover:text-pink-dark underline"
+                >
+                  Terms and Conditions
+                </a>{" "}
+                *
               </Label>
             </div>
 

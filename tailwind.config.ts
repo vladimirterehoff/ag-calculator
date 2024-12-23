@@ -31,6 +31,7 @@ export default {
         pink: {
           DEFAULT: "#FF4B6C",
           light: "#FF6B8C",
+          dark: "#E63456", // Added darker pink for hover state
         },
         primary: {
           DEFAULT: "hsl(var(--primary))",
