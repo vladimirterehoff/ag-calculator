@@ -103,7 +103,7 @@ export const Calculator = () => {
         description: "Please select a platform, domain, and at least one feature before submitting.",
         variant: "destructive",
       });
-      return false;
+      return;
     }
 
     // Then validate form data
@@ -113,7 +113,7 @@ export const Calculator = () => {
         description: "Please fill in all required fields and accept the Terms and Conditions.",
         variant: "destructive",
       });
-      return false;
+      return;
     }
 
     // If all validations pass, show success message
@@ -124,7 +124,6 @@ export const Calculator = () => {
     });
     
     resetAllSelections();
-    return true;
   };
 
   return (
