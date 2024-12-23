@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { useToast } from "@/hooks/use-toast";
 import { DomainSelection } from "./calculator/DomainSelection";
 import { FeatureSelection } from "./calculator/FeatureSelection";
@@ -39,6 +39,7 @@ export const Calculator = () => {
     features: false,
   });
   const { toast } = useToast();
+  const featuresRef = useRef<HTMLDivElement>(null);
 
   const handlePlatformSelect = (platform: string) => {
     setSelectedPlatform(platform);
@@ -49,6 +50,11 @@ export const Calculator = () => {
     setSelectedDomain(domainId);
     setValidationErrors(prev => ({ ...prev, domain: false }));
     setSelectedFeatures([]);
+    
+    // Auto-scroll to features section after domain selection
+    setTimeout(() => {
+      featuresRef.current?.scrollIntoView({ behavior: 'smooth' });
+    }, 100);
   };
 
   const handleFeatureToggle = (feature: string) => {
@@ -144,14 +150,16 @@ export const Calculator = () => {
               onDomainSelect={handleDomainSelect}
               error={validationErrors.domain}
             />
-            {selectedDomain && features[selectedDomain as keyof typeof features] && (
-              <FeatureSelection
-                features={features[selectedDomain as keyof typeof features]}
-                selectedFeatures={selectedFeatures}
-                onFeatureToggle={handleFeatureToggle}
-                error={validationErrors.features}
-              />
-            )}
+            <div ref={featuresRef}>
+              {selectedDomain && features[selectedDomain as keyof typeof features] && (
+                <FeatureSelection
+                  features={features[selectedDomain as keyof typeof features]}
+                  selectedFeatures={selectedFeatures}
+                  onFeatureToggle={handleFeatureToggle}
+                  error={validationErrors.features}
+                />
+              )}
+            </div>
           </div>
           <div className="lg:w-[30%]">
             <ContactForm
