@@ -96,10 +96,17 @@ export const Calculator = () => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     
+    // First validate platform, domain, and features
     if (!validateSelections()) {
+      toast({
+        title: "Required Fields Missing",
+        description: "Please select a platform, domain, and at least one feature before submitting.",
+        variant: "destructive",
+      });
       return false;
     }
 
+    // Then validate form data
     if (!formData.name || !formData.email || !formData.termsAccepted) {
       toast({
         title: "Error",
@@ -109,11 +116,14 @@ export const Calculator = () => {
       return false;
     }
 
+    // If all validations pass, show success message
     toast({
       title: "Success!",
       description:
         "Thank you for filling out this form. Your project plan will arrive in your inbox within 10-15 minutes.",
     });
+    
+    resetAllSelections();
     return true;
   };
 
