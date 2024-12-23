@@ -191,7 +191,7 @@ const features = {
       "Educational Games",
       "Language Support"
     ]
-  ],
+  },
   finance: {
     banking: [
       "Account Management",
@@ -253,7 +253,7 @@ const features = {
       "Export Capabilities",
       "Scheduled Reports"
     ]
-  ],
+  },
   realestate: {
     listing: [
       "Property Listings",
@@ -315,7 +315,7 @@ const features = {
       "Automated Marketing",
       "CRM Integration"
     ]
-  ],
+  },
   travel: {
     booking: [
       "Flight Booking",
@@ -377,7 +377,7 @@ const features = {
       "Customer Feedback",
       "ROI Analysis"
     ]
-  ],
+  },
   media: {
     content: [
       "Content Management",
@@ -439,7 +439,7 @@ const features = {
       "Distribution Rights",
       "Partner Management"
     ]
-  ],
+  },
   gaming: {
     core: [
       "Game Engine",
@@ -501,7 +501,7 @@ const features = {
       "Revenue Analysis",
       "Cheat Detection"
     ]
-  ],
+  },
   logistics: {
     tracking: [
       "Shipment Tracking",
@@ -563,7 +563,7 @@ const features = {
       "Financial Analytics",
       "Predictive Analytics"
     ]
-  ],
+  },
   social: {
     core: [
       "User Profiles",
@@ -625,8 +625,7 @@ const features = {
       "Trend Analysis",
       "Reporting Tools"
     ]
-  },
-  // Add more domain features as needed
+  }
 };
 
 export const Calculator = () => {
