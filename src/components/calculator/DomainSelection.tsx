@@ -25,12 +25,18 @@ const domains = [
 interface DomainSelectionProps {
   selectedDomain: string;
   onDomainSelect: (domain: string) => void;
+  error?: boolean;
 }
 
-export const DomainSelection = ({ selectedDomain, onDomainSelect }: DomainSelectionProps) => {
+export const DomainSelection = ({ selectedDomain, onDomainSelect, error }: DomainSelectionProps) => {
   return (
     <div className="mb-8">
-      <h3 className="text-2xl font-semibold mb-4 text-navy">Select Your Domain</h3>
+      <div className="flex justify-between items-center mb-4">
+        <h3 className="text-2xl font-semibold text-navy">Select Your Domain</h3>
+        {error && (
+          <span className="text-red-500 text-sm">Please select a domain</span>
+        )}
+      </div>
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
         {domains.map((domain) => (
           <button
@@ -39,6 +45,8 @@ export const DomainSelection = ({ selectedDomain, onDomainSelect }: DomainSelect
             className={`p-4 rounded-lg border ${
               selectedDomain === domain.id
                 ? "border-pink bg-pink/10"
+                : error
+                ? "border-red-300 hover:border-pink/50"
                 : "border-gray-200 hover:border-pink/50"
             } transition-colors flex flex-col items-center gap-2`}
           >

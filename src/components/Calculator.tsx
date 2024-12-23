@@ -33,23 +33,30 @@ export const Calculator = () => {
     termsAccepted: false,
     newsletter: false,
   });
+  const [validationErrors, setValidationErrors] = useState({
+    platform: false,
+    domain: false,
+    features: false,
+  });
   const { toast } = useToast();
 
   const handlePlatformSelect = (platform: string) => {
     setSelectedPlatform(platform);
+    setValidationErrors(prev => ({ ...prev, platform: false }));
   };
 
   const handleDomainSelect = (domainId: string) => {
     setSelectedDomain(domainId);
+    setValidationErrors(prev => ({ ...prev, domain: false }));
     setSelectedFeatures([]);
   };
 
   const handleFeatureToggle = (feature: string) => {
-    setSelectedFeatures((prev) =>
-      prev.includes(feature)
-        ? prev.filter((f) => f !== feature)
-        : [...prev, feature]
-    );
+    const newFeatures = selectedFeatures.includes(feature)
+      ? selectedFeatures.filter((f) => f !== feature)
+      : [...selectedFeatures, feature];
+    setSelectedFeatures(newFeatures);
+    setValidationErrors(prev => ({ ...prev, features: false }));
   };
 
   const handleFormChange = (data: Partial<typeof formData>) => {
@@ -68,44 +75,29 @@ export const Calculator = () => {
       termsAccepted: false,
       newsletter: false,
     });
+    setValidationErrors({
+      platform: false,
+      domain: false,
+      features: false,
+    });
   };
 
   const validateSelections = () => {
-    if (!selectedPlatform) {
-      toast({
-        title: "Platform Required",
-        description: "Please select a platform for your application.",
-        variant: "destructive",
-      });
-      return false;
-    }
+    const errors = {
+      platform: !selectedPlatform,
+      domain: !selectedDomain,
+      features: selectedFeatures.length === 0,
+    };
 
-    if (!selectedDomain) {
-      toast({
-        title: "Domain Required",
-        description: "Please select a domain for your application.",
-        variant: "destructive",
-      });
-      return false;
-    }
-
-    if (selectedFeatures.length === 0) {
-      toast({
-        title: "Features Required",
-        description: "Please select at least one feature for your application.",
-        variant: "destructive",
-      });
-      return false;
-    }
-
-    return true;
+    setValidationErrors(errors);
+    return !Object.values(errors).some(error => error);
   };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     
     if (!validateSelections()) {
-      return;
+      return false;
     }
 
     if (!formData.name || !formData.email || !formData.termsAccepted) {
@@ -114,7 +106,7 @@ export const Calculator = () => {
         description: "Please fill in all required fields and accept the Terms and Conditions.",
         variant: "destructive",
       });
-      return;
+      return false;
     }
 
     toast({
@@ -122,6 +114,7 @@ export const Calculator = () => {
       description:
         "Thank you for filling out this form. Your project plan will arrive in your inbox within 10-15 minutes.",
     });
+    return true;
   };
 
   return (
@@ -135,16 +128,19 @@ export const Calculator = () => {
             <PlatformSelection
               selectedPlatform={selectedPlatform}
               onPlatformSelect={handlePlatformSelect}
+              error={validationErrors.platform}
             />
             <DomainSelection
               selectedDomain={selectedDomain}
               onDomainSelect={handleDomainSelect}
+              error={validationErrors.domain}
             />
             {selectedDomain && features[selectedDomain as keyof typeof features] && (
               <FeatureSelection
                 features={features[selectedDomain as keyof typeof features]}
                 selectedFeatures={selectedFeatures}
                 onFeatureToggle={handleFeatureToggle}
+                error={validationErrors.features}
               />
             )}
           </div>
