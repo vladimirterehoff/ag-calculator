@@ -8,8 +8,8 @@ export const Hero = () => {
   };
 
   return (
-    <div className="relative min-h-[80vh] bg-navy text-white flex items-center">
-      <div className="container mx-auto px-4 py-16">
+    <div className="relative min-h-[60vh] bg-navy text-white flex items-center">
+      <div className="container mx-auto px-4 py-12">
         <div className="flex flex-col lg:flex-row items-center gap-16">
           <div className="lg:w-1/2 animate-fade-up">
             <div className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-pink/20 text-pink mb-8">
@@ -37,12 +37,12 @@ export const Hero = () => {
             </Button>
           </div>
           
-          <div className="lg:w-1/2 relative">
+          <div className="lg:w-1/2 relative h-[500px]">
             {/* Gradient background effect */}
             <div className="absolute inset-0 bg-gradient-to-r from-navy/20 to-pink/20 rounded-3xl transform rotate-3" />
             
             {/* Image container with effects */}
-            <div className="relative transform hover:scale-[1.02] transition-transform duration-300">
+            <div className="relative h-full transform hover:scale-[1.02] transition-transform duration-300">
               {/* Glow effect */}
               <div className="absolute -inset-1 bg-gradient-to-r from-pink/20 via-transparent to-pink/20 blur-lg opacity-50" />
               
@@ -50,9 +50,9 @@ export const Hero = () => {
               <div className="absolute inset-0 bg-gradient-to-r from-pink/10 via-transparent to-pink/10 rounded-2xl" />
               
               <img
-                src="/lovable-uploads/d4570f2d-b030-4b7f-8c2a-8ffa1d835897.png"
-                alt="Analytics Dashboard"
-                className="relative w-full h-auto rounded-2xl shadow-2xl"
+                src="/lovable-uploads/f3916071-cd11-4626-8bbe-0132f95fe832.png"
+                alt="Developer working"
+                className="relative w-full h-full object-cover rounded-2xl shadow-2xl"
               />
             </div>
           </div>
