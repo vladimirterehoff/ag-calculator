@@ -1,7 +1,9 @@
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
+import { Loader2 } from "lucide-react";
 
 interface ContactFormProps {
   formData: {
@@ -21,6 +23,42 @@ export const ContactForm = ({
   onFormChange,
   onSubmit,
 }: ContactFormProps) => {
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+
+    // Simulate form submission delay
+    await new Promise((resolve) => setTimeout(resolve, 2000));
+    
+    // Call the original onSubmit handler
+    onSubmit(e);
+    
+    setIsSubmitting(false);
+    setIsSuccess(true);
+  };
+
+  if (isSuccess) {
+    return (
+      <div className="sticky top-4">
+        <div className="bg-white rounded-xl shadow-lg p-6">
+          <div className="text-center space-y-4 animate-fade-up">
+            <div className="text-pink text-5xl mb-4">🎉</div>
+            <h3 className="text-2xl font-bold text-navy">Thank you!</h3>
+            <p className="text-gray-600">
+              Your project plan is being prepared and will arrive in your inbox within 10-15 minutes.
+            </p>
+            <p className="text-sm text-gray-500">
+              Please check your email (including spam folder) for further instructions.
+            </p>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="sticky top-4">
       <div className="bg-white rounded-xl shadow-lg p-6">
@@ -31,7 +69,7 @@ export const ContactForm = ({
           </p>
         </div>
 
-        <form onSubmit={onSubmit} className="space-y-4">
+        <form onSubmit={handleSubmit} className="space-y-4">
           <div>
             <Label htmlFor="name">Full Name *</Label>
             <Input
@@ -39,6 +77,7 @@ export const ContactForm = ({
               value={formData.name}
               onChange={(e) => onFormChange({ name: e.target.value })}
               required
+              disabled={isSubmitting}
             />
           </div>
 
@@ -48,6 +87,7 @@ export const ContactForm = ({
               id="phone"
               value={formData.phone}
               onChange={(e) => onFormChange({ phone: e.target.value })}
+              disabled={isSubmitting}
             />
           </div>
 
@@ -59,6 +99,7 @@ export const ContactForm = ({
               value={formData.email}
               onChange={(e) => onFormChange({ email: e.target.value })}
               required
+              disabled={isSubmitting}
             />
           </div>
 
@@ -68,6 +109,7 @@ export const ContactForm = ({
               id="linkedin"
               value={formData.linkedin}
               onChange={(e) => onFormChange({ linkedin: e.target.value })}
+              disabled={isSubmitting}
             />
           </div>
 
@@ -80,6 +122,7 @@ export const ContactForm = ({
                   onFormChange({ termsAccepted: checked as boolean })
                 }
                 required
+                disabled={isSubmitting}
               />
               <Label htmlFor="terms" className="text-sm">
                 I agree to the{" "}
@@ -102,6 +145,7 @@ export const ContactForm = ({
                 onCheckedChange={(checked) =>
                   onFormChange({ newsletter: checked as boolean })
                 }
+                disabled={isSubmitting}
               />
               <Label htmlFor="newsletter" className="text-sm">
                 Subscribe to our newsletter with latest blog articles and industry trends
@@ -111,9 +155,17 @@ export const ContactForm = ({
 
           <Button
             type="submit"
-            className="w-full bg-pink hover:bg-pink-light text-white"
+            className="w-full bg-pink hover:bg-pink-light text-white relative"
+            disabled={isSubmitting}
           >
-            Get Your Project Plan
+            {isSubmitting ? (
+              <span className="flex items-center justify-center">
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                Processing...
+              </span>
+            ) : (
+              "Get Your Project Plan"
+            )}
           </Button>
         </form>
       </div>
