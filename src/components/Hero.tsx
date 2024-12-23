@@ -31,12 +31,16 @@ export const Hero = () => {
               <ArrowDown className="w-5 h-5" />
             </Button>
           </div>
-          <div className="lg:w-1/2">
-            <img
-              src="/lovable-uploads/dc0aaeb1-ff6c-4639-b663-0af009767835.png"
-              alt="Analytics Dashboard"
-              className="w-full h-auto rounded-2xl shadow-2xl"
-            />
+          <div className="lg:w-1/2 relative">
+            <div className="relative transform hover:scale-[1.02] transition-transform duration-300">
+              <div className="absolute inset-0 bg-gradient-to-r from-pink/10 via-transparent to-pink/10 rounded-2xl" />
+              <div className="absolute -inset-1 bg-gradient-to-r from-pink/20 via-transparent to-pink/20 blur-lg opacity-50" />
+              <img
+                src="/lovable-uploads/ae207ca3-651a-43cb-a1ed-97ee59384b15.png"
+                alt="Analytics Dashboard"
+                className="relative w-full h-auto rounded-2xl shadow-2xl"
+              />
+            </div>
           </div>
         </div>
       </div>
