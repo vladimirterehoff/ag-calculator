@@ -70,8 +70,44 @@ export const Calculator = () => {
     });
   };
 
+  const validateSelections = () => {
+    if (!selectedPlatform) {
+      toast({
+        title: "Platform Required",
+        description: "Please select a platform for your application.",
+        variant: "destructive",
+      });
+      return false;
+    }
+
+    if (!selectedDomain) {
+      toast({
+        title: "Domain Required",
+        description: "Please select a domain for your application.",
+        variant: "destructive",
+      });
+      return false;
+    }
+
+    if (selectedFeatures.length === 0) {
+      toast({
+        title: "Features Required",
+        description: "Please select at least one feature for your application.",
+        variant: "destructive",
+      });
+      return false;
+    }
+
+    return true;
+  };
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    
+    if (!validateSelections()) {
+      return;
+    }
+
     if (!formData.name || !formData.email || !formData.termsAccepted) {
       toast({
         title: "Error",
@@ -80,6 +116,7 @@ export const Calculator = () => {
       });
       return;
     }
+
     toast({
       title: "Success!",
       description:
