@@ -158,7 +158,7 @@ export const ContactForm = ({
 
           <Button
             type="submit"
-            className="w-full bg-pink hover:bg-pink-light text-white relative"
+            className="w-full bg-pink hover:bg-pink-dark text-white relative"
             disabled={isSubmitting}
           >
             {isSubmitting ? (
