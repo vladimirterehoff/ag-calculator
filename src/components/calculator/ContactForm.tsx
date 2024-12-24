@@ -47,7 +47,7 @@ export const ContactForm = ({
     return (
       <div className="sticky top-4">
         <div className="bg-white rounded-xl shadow-lg p-6">
-          <div className="text-center space-y-4 animate-fade-up">
+          <div className="text-left space-y-4 animate-fade-up">
             <div className="text-pink text-5xl mb-4">🎉</div>
             <h3 className="text-2xl font-bold text-navy">Thank you!</h3>
             <p className="text-gray-600">
@@ -65,14 +65,14 @@ export const ContactForm = ({
   return (
     <div className="sticky top-4">
       <div className="bg-white rounded-xl shadow-lg p-6">
-        <div className="bg-white pt-4 pb-6 -mt-4 rounded-t-xl">
+        <div className="bg-white pt-4 pb-6 -mt-4 rounded-t-xl text-left">
           <h3 className="text-2xl font-bold text-navy mb-2">Your document is almost ready!</h3>
           <p className="text-gray-600 mb-6">
             Just fill in your contact details, and we'll send it within 10-15 mins:
           </p>
         </div>
 
-        <form onSubmit={handleSubmit} className="space-y-4">
+        <form onSubmit={handleSubmit} className="space-y-4 text-left">
           <div>
             <Label htmlFor="name">Full Name *</Label>
             <Input

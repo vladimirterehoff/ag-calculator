@@ -13,16 +13,16 @@ export const Hero = () => {
   };
 
   return (
-    <div className="relative min-h-[60vh] bg-navy text-white flex items-center">
-      <div className="container mx-auto px-4 py-12">
-        <div className="flex flex-col lg:flex-row items-center gap-16">
-          <div className="lg:w-1/2 animate-fade-up">
+    <div className="relative min-h-[60vh] bg-navy text-white w-full">
+      <div className="max-w-[1400px] mx-auto px-4 py-12">
+        <div className="flex flex-col lg:flex-row items-start gap-16">
+          <div className="lg:w-1/2 animate-fade-up text-left">
             <div className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-pink/20 text-pink mb-8">
               <Code2 className="w-6 h-6" />
               <span className="text-lg font-medium">AI-Powered Cost Calculator</span>
             </div>
             
-            <h1 className="text-5xl lg:text-6xl font-bold mb-8 leading-tight flex flex-col">
+            <h1 className="text-5xl lg:text-6xl font-bold mb-8 leading-tight flex flex-col text-left">
               {content.title.map((line, index) => (
                 <span key={index} className={index === 1 ? "text-pink" : ""}>
                   {line}
@@ -30,7 +30,7 @@ export const Hero = () => {
               ))}
             </h1>
             
-            <p className="text-xl mb-10 text-gray-300 leading-relaxed max-w-2xl">
+            <p className="text-xl mb-10 text-gray-300 leading-relaxed max-w-2xl text-left">
               {content.description}
             </p>
             
