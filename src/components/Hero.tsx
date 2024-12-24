@@ -1,7 +1,12 @@
 import { ArrowDown, Code2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useParams } from "react-router-dom";
+import { domainContent, defaultContent } from "@/utils/domainContent";
 
 export const Hero = () => {
+  const { domain } = useParams();
+  const content = domain ? domainContent[domain] || defaultContent : defaultContent;
+
   const scrollToCalculator = () => {
     const element = document.getElementById("calculator");
     element?.scrollIntoView({ behavior: "smooth" });
@@ -18,14 +23,15 @@ export const Hero = () => {
             </div>
             
             <h1 className="text-5xl lg:text-6xl font-bold mb-8 leading-tight flex flex-col">
-              <span>Calculate Your</span>
-              <span className="text-pink">Project Cost</span>
-              <span>in Minutes</span>
+              {content.title.map((line, index) => (
+                <span key={index} className={index === 1 ? "text-pink" : ""}>
+                  {line}
+                </span>
+              ))}
             </h1>
             
             <p className="text-xl mb-10 text-gray-300 leading-relaxed max-w-2xl">
-              Get accurate estimates powered by AI analysis of thousands of successful
-              projects. Make informed decisions with real-time insights.
+              {content.description}
             </p>
             
             <Button

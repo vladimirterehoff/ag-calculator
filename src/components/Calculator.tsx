@@ -628,9 +628,14 @@ const features = {
   }
 };
 
-export const Calculator = () => {
+interface CalculatorProps {
+  onDomainSelect?: (domain: string) => void;
+}
+
+export const Calculator = ({ onDomainSelect }: CalculatorProps) => {
+  const { domain } = useParams();
   const [selectedPlatform, setSelectedPlatform] = useState("");
-  const [selectedDomain, setSelectedDomain] = useState("");
+  const [selectedDomain, setSelectedDomain] = useState(domain || "");
   const [selectedFeatures, setSelectedFeatures] = useState<string[]>([]);
   const [formData, setFormData] = useState({
     name: "",
@@ -648,6 +653,13 @@ export const Calculator = () => {
   const { toast } = useToast();
   const featuresRef = useRef<HTMLDivElement>(null);
 
+  useEffect(() => {
+    if (domain && domain !== selectedDomain) {
+      setSelectedDomain(domain);
+      setSelectedFeatures([]);
+    }
+  }, [domain]);
+
   const handlePlatformSelect = (platform: string) => {
     setSelectedPlatform(platform);
     setValidationErrors(prev => ({ ...prev, platform: false }));
@@ -657,6 +669,7 @@ export const Calculator = () => {
     setSelectedDomain(domainId);
     setValidationErrors(prev => ({ ...prev, domain: false }));
     setSelectedFeatures([]);
+    onDomainSelect?.(domainId);
     
     // Auto-scroll to features section after domain selection
     setTimeout(() => {
@@ -747,15 +760,15 @@ export const Calculator = () => {
         </h2>
         <div className="flex flex-col lg:flex-row gap-8">
           <div className="lg:w-[70%]">
-            <PlatformSelection
-              selectedPlatform={selectedPlatform}
-              onPlatformSelect={handlePlatformSelect}
-              error={validationErrors.platform}
-            />
             <DomainSelection
               selectedDomain={selectedDomain}
               onDomainSelect={handleDomainSelect}
               error={validationErrors.domain}
+            />
+            <PlatformSelection
+              selectedPlatform={selectedPlatform}
+              onPlatformSelect={handlePlatformSelect}
+              error={validationErrors.platform}
             />
             <div ref={featuresRef}>
               {selectedDomain && features[selectedDomain as keyof typeof features] && (
