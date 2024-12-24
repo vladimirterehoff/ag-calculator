@@ -1,4 +1,5 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
+import { useParams } from "react-router-dom";
 import { useToast } from "@/hooks/use-toast";
 import { DomainSelection } from "./calculator/DomainSelection";
 import { FeatureSelection } from "./calculator/FeatureSelection";
