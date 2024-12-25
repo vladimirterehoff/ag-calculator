@@ -7,7 +7,7 @@ function App() {
     <Router>
       <Routes>
         <Route path="/" element={<Index />} />
-        <Route path="/:domain" element={<Index />} />
+        <Route path="/:industry/:subIndustry" element={<Index />} />
       </Routes>
     </Router>
   );
