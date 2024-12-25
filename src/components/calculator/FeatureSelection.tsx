@@ -12,13 +12,12 @@ interface Feature {
 }
 
 interface FeatureSelectionProps {
-  features: Record<string, string[]>;
+  features: string[];
   selectedFeatures: string[];
   onFeatureToggle: (feature: string) => void;
   error?: boolean;
 }
 
-// Define tooltips for features that need additional explanation
 const featureTooltips: Record<string, string> = {
   "360° Product View": "Interactive product visualization that allows customers to rotate and view products from all angles",
   "Split Payments": "Ability to divide a payment among multiple payment methods or between multiple parties",
@@ -41,7 +40,7 @@ export const FeatureSelection = ({
   onFeatureToggle,
   error,
 }: FeatureSelectionProps) => {
-  if (!features || Object.keys(features).length === 0) return null;
+  if (!features || features.length === 0) return null;
 
   return (
     <TooltipProvider>
@@ -53,36 +52,31 @@ export const FeatureSelection = ({
           )}
         </div>
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {Object.entries(features).map(([category, categoryFeatures]) => (
-            <div key={category} className="mb-6">
-              <h4 className="text-lg font-medium mb-3 capitalize text-navy">
-                {category} Features
-              </h4>
+          {features.map((feature) => (
+            <div key={feature} className="mb-6">
               <div className={`space-y-2 ${error ? 'border-red-300 border rounded-lg p-4' : ''}`}>
-                {categoryFeatures.map((feature) => (
-                  <label
-                    key={feature}
-                    className="flex items-center gap-2 cursor-pointer group"
-                  >
-                    <input
-                      type="checkbox"
-                      checked={selectedFeatures.includes(feature)}
-                      onChange={() => onFeatureToggle(feature)}
-                      className={`w-4 h-4 ${error ? 'border-red-300' : ''} text-pink`}
-                    />
-                    <span className="text-gray-700">{feature}</span>
-                    {featureTooltips[feature] && (
-                      <Tooltip>
-                        <TooltipTrigger>
-                          <Info className="w-4 h-4 text-gray-400 group-hover:text-gray-600 transition-colors" />
-                        </TooltipTrigger>
-                        <TooltipContent>
-                          <p className="max-w-xs">{featureTooltips[feature]}</p>
-                        </TooltipContent>
-                      </Tooltip>
-                    )}
-                  </label>
-                ))}
+                <label
+                  key={feature}
+                  className="flex items-center gap-2 cursor-pointer group"
+                >
+                  <input
+                    type="checkbox"
+                    checked={selectedFeatures.includes(feature)}
+                    onChange={() => onFeatureToggle(feature)}
+                    className={`w-4 h-4 ${error ? 'border-red-300' : ''} text-pink`}
+                  />
+                  <span className="text-gray-700">{feature}</span>
+                  {featureTooltips[feature] && (
+                    <Tooltip>
+                      <TooltipTrigger>
+                        <Info className="w-4 h-4 text-gray-400 group-hover:text-gray-600 transition-colors" />
+                      </TooltipTrigger>
+                      <TooltipContent>
+                        <p className="max-w-xs">{featureTooltips[feature]}</p>
+                      </TooltipContent>
+                    </Tooltip>
+                  )}
+                </label>
               </div>
             </div>
           ))}

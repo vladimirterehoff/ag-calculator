@@ -32,7 +32,6 @@ export const Calculator = () => {
     setSelectedPlatform(platform);
     setValidationErrors(prev => ({ ...prev, platform: false }));
     
-    // Auto-scroll to features section after platform selection
     setTimeout(() => {
       featuresRef.current?.scrollIntoView({ behavior: 'smooth' });
     }, 100);
