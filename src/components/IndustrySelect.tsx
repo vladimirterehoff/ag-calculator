@@ -15,15 +15,39 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { industries } from "@/utils/industriesData";
+
+type Industry = {
+  id: string;
+  name: string;
+  subIndustries: {
+    id: string;
+    name: string;
+  }[];
+};
+
+const industries: Industry[] = [
+  {
+    id: "technology",
+    name: "Technology",
+    subIndustries: [
+      { id: "ecommerce", name: "E-commerce" },
+      { id: "healthcare", name: "Healthcare Technology" },
+      { id: "education", name: "Education Technology" },
+      { id: "finance", name: "Financial Technology" },
+      { id: "realestate", name: "Real Estate Technology" },
+      { id: "travel", name: "Travel Technology" },
+      { id: "media", name: "Media Technology" },
+      { id: "gaming", name: "Gaming" },
+      { id: "logistics", name: "Logistics Technology" },
+      { id: "social", name: "Social Media" }
+    ]
+  }
+];
 
 export function IndustrySelect() {
   const [open, setOpen] = useState(false);
   const [selectedIndustry, setSelectedIndustry] = useState<string>("");
   const navigate = useNavigate();
-
-  // Ensure we have valid data to render and handle undefined/null cases
-  const validIndustries = Array.isArray(industries) ? industries.filter(Boolean) : [];
 
   const handleSelect = (industryId: string) => {
     if (!industryId) return;
@@ -41,13 +65,9 @@ export function IndustrySelect() {
     }
   };
 
-  // Find the selected industry name for display with null checks
-  const selectedIndustryName = validIndustries
-    .flatMap((industry) => {
-      if (!industry || !Array.isArray(industry.subIndustries)) return [];
-      return industry.subIndustries.filter(Boolean);
-    })
-    .find((subIndustry) => subIndustry?.id === selectedIndustry)?.name || "Select industry...";
+  const selectedIndustryName = industries
+    .flatMap(industry => industry.subIndustries)
+    .find(subIndustry => subIndustry.id === selectedIndustry)?.name || "Select industry...";
 
   return (
     <div className="flex items-center gap-4">
@@ -67,39 +87,27 @@ export function IndustrySelect() {
           <Command>
             <CommandInput placeholder="Search industry..." />
             <CommandEmpty>No industry found.</CommandEmpty>
-            {validIndustries.map((industry) => {
-              if (!industry || !industry.id || !industry.name) return null;
-              
-              const validSubIndustries = Array.isArray(industry.subIndustries) 
-                ? industry.subIndustries.filter(Boolean)
-                : [];
-
-              return (
-                <CommandGroup key={industry.id} heading={industry.name}>
-                  {validSubIndustries.map((subIndustry) => {
-                    if (!subIndustry || !subIndustry.id || !subIndustry.name) return null;
-                    
-                    return (
-                      <CommandItem
-                        key={subIndustry.id}
-                        value={subIndustry.id}
-                        onSelect={() => handleSelect(subIndustry.id)}
-                      >
-                        <Check
-                          className={cn(
-                            "mr-2 h-4 w-4",
-                            selectedIndustry === subIndustry.id
-                              ? "opacity-100"
-                              : "opacity-0"
-                          )}
-                        />
-                        {subIndustry.name}
-                      </CommandItem>
-                    );
-                  })}
-                </CommandGroup>
-              );
-            })}
+            {industries.map((industry) => (
+              <CommandGroup key={industry.id} heading={industry.name}>
+                {industry.subIndustries.map((subIndustry) => (
+                  <CommandItem
+                    key={subIndustry.id}
+                    value={subIndustry.id}
+                    onSelect={() => handleSelect(subIndustry.id)}
+                  >
+                    <Check
+                      className={cn(
+                        "mr-2 h-4 w-4",
+                        selectedIndustry === subIndustry.id
+                          ? "opacity-100"
+                          : "opacity-0"
+                      )}
+                    />
+                    {subIndustry.name}
+                  </CommandItem>
+                ))}
+              </CommandGroup>
+            ))}
           </Command>
         </PopoverContent>
       </Popover>
