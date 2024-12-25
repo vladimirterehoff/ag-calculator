@@ -22,10 +22,11 @@ export function IndustrySelect() {
   const [selectedIndustry, setSelectedIndustry] = useState<string>("");
   const navigate = useNavigate();
 
-  // Ensure we have valid data to render
-  const validIndustries = Array.isArray(industries) ? industries : [];
+  // Ensure we have valid data to render and handle undefined/null cases
+  const validIndustries = Array.isArray(industries) ? industries.filter(Boolean) : [];
 
   const handleSelect = (industryId: string) => {
+    if (!industryId) return;
     setSelectedIndustry(industryId);
     setOpen(false);
   };
@@ -40,10 +41,13 @@ export function IndustrySelect() {
     }
   };
 
-  // Find the selected industry name for display
+  // Find the selected industry name for display with null checks
   const selectedIndustryName = validIndustries
-    .flatMap((i) => (Array.isArray(i?.subIndustries) ? i.subIndustries : []))
-    .find((i) => i?.id === selectedIndustry)?.name || "Select industry...";
+    .flatMap((industry) => {
+      if (!industry || !Array.isArray(industry.subIndustries)) return [];
+      return industry.subIndustries.filter(Boolean);
+    })
+    .find((subIndustry) => subIndustry?.id === selectedIndustry)?.name || "Select industry...";
 
   return (
     <div className="flex items-center gap-4">
@@ -63,30 +67,39 @@ export function IndustrySelect() {
           <Command>
             <CommandInput placeholder="Search industry..." />
             <CommandEmpty>No industry found.</CommandEmpty>
-            {validIndustries.map((industry) => (
-              <CommandGroup key={industry?.id || Math.random()} heading={industry?.name || ""}>
-                {Array.isArray(industry?.subIndustries) &&
-                  industry.subIndustries
-                    .filter(Boolean)
-                    .map((subIndustry) => (
+            {validIndustries.map((industry) => {
+              if (!industry || !industry.id || !industry.name) return null;
+              
+              const validSubIndustries = Array.isArray(industry.subIndustries) 
+                ? industry.subIndustries.filter(Boolean)
+                : [];
+
+              return (
+                <CommandGroup key={industry.id} heading={industry.name}>
+                  {validSubIndustries.map((subIndustry) => {
+                    if (!subIndustry || !subIndustry.id || !subIndustry.name) return null;
+                    
+                    return (
                       <CommandItem
-                        key={subIndustry?.id || Math.random()}
-                        value={subIndustry?.id || ""}
-                        onSelect={() => handleSelect(subIndustry?.id || "")}
+                        key={subIndustry.id}
+                        value={subIndustry.id}
+                        onSelect={() => handleSelect(subIndustry.id)}
                       >
                         <Check
                           className={cn(
                             "mr-2 h-4 w-4",
-                            selectedIndustry === subIndustry?.id
+                            selectedIndustry === subIndustry.id
                               ? "opacity-100"
                               : "opacity-0"
                           )}
                         />
-                        {subIndustry?.name || ""}
+                        {subIndustry.name}
                       </CommandItem>
-                    ))}
-              </CommandGroup>
-            ))}
+                    );
+                  })}
+                </CommandGroup>
+              );
+            })}
           </Command>
         </PopoverContent>
       </Popover>
