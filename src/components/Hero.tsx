@@ -1,16 +1,11 @@
-import { ArrowDown, Code2 } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { Code2 } from "lucide-react";
 import { useParams } from "react-router-dom";
 import { domainContent, defaultContent } from "@/utils/domainContent";
+import { IndustrySelect } from "./IndustrySelect";
 
 export const Hero = () => {
   const { domain } = useParams();
   const content = domain ? domainContent[domain] || defaultContent : defaultContent;
-
-  const scrollToCalculator = () => {
-    const element = document.getElementById("calculator");
-    element?.scrollIntoView({ behavior: "smooth" });
-  };
 
   return (
     <div className="relative min-h-[60vh] bg-navy text-white w-full">
@@ -34,13 +29,7 @@ export const Hero = () => {
               {content.description}
             </p>
             
-            <Button
-              onClick={scrollToCalculator}
-              className="bg-pink hover:bg-pink-dark text-white px-10 py-8 rounded-xl text-xl flex items-center gap-3 transition-colors"
-            >
-              Start Calculating
-              <ArrowDown className="w-6 h-6" />
-            </Button>
+            <IndustrySelect />
           </div>
           
           <div className="lg:w-1/2 relative h-[500px]">

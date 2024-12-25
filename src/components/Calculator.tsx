@@ -5,6 +5,7 @@ import { DomainSelection } from "./calculator/DomainSelection";
 import { FeatureSelection } from "./calculator/FeatureSelection";
 import { ContactForm } from "./calculator/ContactForm";
 import { PlatformSelection } from "./calculator/PlatformSelection";
+import { industries } from "@/utils/industriesData";
 
 const features = {
   ecommerce: {
