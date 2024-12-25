@@ -20,9 +20,9 @@ const Index = () => {
   return (
     <div className="min-h-screen">
       <Hero />
-      <Benefits />
       <Calculator onDomainSelect={(domain) => navigate(`/${domain}`)} />
       <FAQ />
+      <Benefits />
     </div>
   );
 };

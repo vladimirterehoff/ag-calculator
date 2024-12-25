@@ -14,8 +14,8 @@ export const Hero = () => {
 
   return (
     <div className="relative min-h-[60vh] bg-navy text-white w-full">
-      <div className="max-w-[1400px] mx-auto px-4 py-12">
-        <div className="flex flex-col lg:flex-row items-start gap-16">
+      <div className="w-full mx-auto px-0">
+        <div className="flex flex-col lg:flex-row items-start gap-16 max-w-[1400px] mx-auto px-4 py-12">
           <div className="lg:w-1/2 animate-fade-up text-left">
             <div className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-pink/20 text-pink mb-8">
               <Code2 className="w-6 h-6" />
