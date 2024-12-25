@@ -31,9 +31,14 @@ export function IndustrySelect() {
     if (selectedIndustry) {
       navigate(`/${selectedIndustry}`);
       const element = document.getElementById("calculator");
-      element?.scrollIntoView({ behavior: "smooth" });
+      if (element) {
+        element.scrollIntoView({ behavior: "smooth" });
+      }
     }
   };
+
+  // Ensure we have valid data to render
+  const validIndustries = Array.isArray(industries) ? industries : [];
 
   return (
     <div className="flex items-center gap-4">
@@ -46,9 +51,9 @@ export function IndustrySelect() {
             className="w-[300px] justify-between bg-white/10 border-white/20 text-white hover:bg-white/20 hover:text-white"
           >
             {selectedIndustry
-              ? industries
-                  .flatMap((i) => [...i.subIndustries])
-                  .find((i) => i.id === selectedIndustry)?.name
+              ? validIndustries
+                  .flatMap((i) => i.subIndustries)
+                  .find((i) => i.id === selectedIndustry)?.name || "Select industry..."
               : "Select industry..."}
             <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
           </Button>
@@ -57,25 +62,26 @@ export function IndustrySelect() {
           <Command>
             <CommandInput placeholder="Search industry..." />
             <CommandEmpty>No industry found.</CommandEmpty>
-            {industries.map((industry) => (
+            {validIndustries.map((industry) => (
               <CommandGroup key={industry.id} heading={industry.name}>
-                {industry.subIndustries.map((subIndustry) => (
-                  <CommandItem
-                    key={subIndustry.id}
-                    value={subIndustry.id}
-                    onSelect={() => handleSelect(subIndustry.id)}
-                  >
-                    <Check
-                      className={cn(
-                        "mr-2 h-4 w-4",
-                        selectedIndustry === subIndustry.id
-                          ? "opacity-100"
-                          : "opacity-0"
-                      )}
-                    />
-                    {subIndustry.name}
-                  </CommandItem>
-                ))}
+                {Array.isArray(industry.subIndustries) && 
+                  industry.subIndustries.map((subIndustry) => (
+                    <CommandItem
+                      key={subIndustry.id}
+                      value={subIndustry.id}
+                      onSelect={() => handleSelect(subIndustry.id)}
+                    >
+                      <Check
+                        className={cn(
+                          "mr-2 h-4 w-4",
+                          selectedIndustry === subIndustry.id
+                            ? "opacity-100"
+                            : "opacity-0"
+                        )}
+                      />
+                      {subIndustry.name}
+                    </CommandItem>
+                  ))}
               </CommandGroup>
             ))}
           </Command>
