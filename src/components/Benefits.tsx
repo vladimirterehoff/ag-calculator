@@ -1,5 +1,4 @@
 import { FileText, Users, BarChart } from "lucide-react";
-import { Button } from "@/components/ui/button";
 
 const benefits = [
   {
@@ -23,11 +22,6 @@ const benefits = [
 ];
 
 export const Benefits = () => {
-  const scrollToCalculator = () => {
-    const element = document.getElementById("calculator");
-    element?.scrollIntoView({ behavior: "smooth" });
-  };
-
   return (
     <div className="py-20 bg-white">
       <div className="container mx-auto px-4">
@@ -52,14 +46,6 @@ export const Benefits = () => {
               <p className="text-gray-600">{benefit.description}</p>
             </div>
           ))}
-        </div>
-        <div className="text-center">
-          <Button
-            onClick={scrollToCalculator}
-            className="bg-pink hover:bg-pink-light text-white px-8 py-6 rounded-lg text-lg"
-          >
-            Calculate Your Project
-          </Button>
         </div>
       </div>
     </div>
