@@ -33,6 +33,8 @@ export function IndustrySelect({ onSelect }: IndustrySelectProps) {
   };
 
   const getDisplayValue = () => {
+    if (!industries) return "Select industry...";
+    
     const industry = industries.find(i => i.id === selectedIndustry);
     const subIndustry = industry?.subIndustries.find(s => s.id === selectedSubIndustry);
     
@@ -42,6 +44,11 @@ export function IndustrySelect({ onSelect }: IndustrySelectProps) {
     
     return "Select industry...";
   };
+
+  if (!Array.isArray(industries)) {
+    console.error("Industries data is not properly initialized");
+    return null;
+  }
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
@@ -62,7 +69,7 @@ export function IndustrySelect({ onSelect }: IndustrySelectProps) {
           <CommandEmpty>No industry found.</CommandEmpty>
           {industries.map((industry) => (
             <CommandGroup key={industry.id} heading={industry.name}>
-              {industry.subIndustries.map((subIndustry) => (
+              {Array.isArray(industry.subIndustries) && industry.subIndustries.map((subIndustry) => (
                 <CommandItem
                   key={`${industry.id}-${subIndustry.id}`}
                   value={`${industry.name} ${subIndustry.name}`}
