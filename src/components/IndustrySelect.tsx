@@ -22,7 +22,7 @@ export function IndustrySelect() {
   const [selectedIndustry, setSelectedIndustry] = useState<string>("");
   const navigate = useNavigate();
 
-  // Ensure we have valid data to render
+  // Ensure we have valid data to render and handle undefined/null cases
   const validIndustries = Array.isArray(industries) ? industries : [];
 
   const handleSelect = (industryId: string) => {
@@ -40,6 +40,11 @@ export function IndustrySelect() {
     }
   };
 
+  // Find the selected industry name for display
+  const selectedIndustryName = validIndustries
+    .flatMap((i) => (Array.isArray(i.subIndustries) ? i.subIndustries : []))
+    .find((i) => i?.id === selectedIndustry)?.name || "Select industry...";
+
   return (
     <div className="flex items-center gap-4">
       <Popover open={open} onOpenChange={setOpen}>
@@ -50,11 +55,7 @@ export function IndustrySelect() {
             aria-expanded={open}
             className="w-[300px] justify-between bg-white/10 border-white/20 text-white hover:bg-white/20 hover:text-white"
           >
-            {selectedIndustry
-              ? validIndustries
-                  .flatMap((i) => i.subIndustries)
-                  .find((i) => i.id === selectedIndustry)?.name || "Select industry..."
-              : "Select industry..."}
+            {selectedIndustryName}
             <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
           </Button>
         </PopoverTrigger>
@@ -64,23 +65,25 @@ export function IndustrySelect() {
             <CommandEmpty>No industry found.</CommandEmpty>
             {validIndustries.map((industry) => (
               <CommandGroup key={industry.id} heading={industry.name}>
-                {Array.isArray(industry.subIndustries) && 
+                {Array.isArray(industry.subIndustries) &&
                   industry.subIndustries.map((subIndustry) => (
-                    <CommandItem
-                      key={subIndustry.id}
-                      value={subIndustry.id}
-                      onSelect={() => handleSelect(subIndustry.id)}
-                    >
-                      <Check
-                        className={cn(
-                          "mr-2 h-4 w-4",
-                          selectedIndustry === subIndustry.id
-                            ? "opacity-100"
-                            : "opacity-0"
-                        )}
-                      />
-                      {subIndustry.name}
-                    </CommandItem>
+                    subIndustry && (
+                      <CommandItem
+                        key={subIndustry.id}
+                        value={subIndustry.id}
+                        onSelect={() => handleSelect(subIndustry.id)}
+                      >
+                        <Check
+                          className={cn(
+                            "mr-2 h-4 w-4",
+                            selectedIndustry === subIndustry.id
+                              ? "opacity-100"
+                              : "opacity-0"
+                          )}
+                        />
+                        {subIndustry.name}
+                      </CommandItem>
+                    )
                   ))}
               </CommandGroup>
             ))}
