@@ -22,6 +22,9 @@ export function IndustrySelect() {
   const [selectedIndustry, setSelectedIndustry] = useState<string>("");
   const navigate = useNavigate();
 
+  // Ensure we have valid data to render
+  const validIndustries = Array.isArray(industries) ? industries : [];
+
   const handleSelect = (industryId: string) => {
     setSelectedIndustry(industryId);
     setOpen(false);
@@ -36,9 +39,6 @@ export function IndustrySelect() {
       }
     }
   };
-
-  // Ensure we have valid data to render
-  const validIndustries = Array.isArray(industries) ? industries : [];
 
   return (
     <div className="flex items-center gap-4">
