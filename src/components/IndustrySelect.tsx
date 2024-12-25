@@ -22,7 +22,7 @@ export function IndustrySelect() {
   const [selectedIndustry, setSelectedIndustry] = useState<string>("");
   const navigate = useNavigate();
 
-  // Ensure we have valid data to render and handle undefined/null cases
+  // Ensure we have valid data to render
   const validIndustries = Array.isArray(industries) ? industries : [];
 
   const handleSelect = (industryId: string) => {
@@ -40,9 +40,9 @@ export function IndustrySelect() {
     }
   };
 
-  // Find the selected industry name for display with null checks
+  // Find the selected industry name for display
   const selectedIndustryName = validIndustries
-    .flatMap((i) => (Array.isArray(i.subIndustries) ? i.subIndustries : []))
+    .flatMap((i) => (Array.isArray(i?.subIndustries) ? i.subIndustries : []))
     .find((i) => i?.id === selectedIndustry)?.name || "Select industry...";
 
   return (
@@ -64,25 +64,25 @@ export function IndustrySelect() {
             <CommandInput placeholder="Search industry..." />
             <CommandEmpty>No industry found.</CommandEmpty>
             {validIndustries.map((industry) => (
-              <CommandGroup key={industry.id} heading={industry.name}>
-                {Array.isArray(industry.subIndustries) &&
+              <CommandGroup key={industry?.id || Math.random()} heading={industry?.name || ""}>
+                {Array.isArray(industry?.subIndustries) &&
                   industry.subIndustries
-                    .filter(Boolean) // Filter out any null/undefined entries
+                    .filter(Boolean)
                     .map((subIndustry) => (
                       <CommandItem
-                        key={subIndustry.id}
-                        value={subIndustry.id}
-                        onSelect={() => handleSelect(subIndustry.id)}
+                        key={subIndustry?.id || Math.random()}
+                        value={subIndustry?.id || ""}
+                        onSelect={() => handleSelect(subIndustry?.id || "")}
                       >
                         <Check
                           className={cn(
                             "mr-2 h-4 w-4",
-                            selectedIndustry === subIndustry.id
+                            selectedIndustry === subIndustry?.id
                               ? "opacity-100"
                               : "opacity-0"
                           )}
                         />
-                        {subIndustry.name}
+                        {subIndustry?.name || ""}
                       </CommandItem>
                     ))}
               </CommandGroup>
