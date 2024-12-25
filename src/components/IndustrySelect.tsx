@@ -40,7 +40,7 @@ export function IndustrySelect() {
     }
   };
 
-  // Find the selected industry name for display
+  // Find the selected industry name for display with null checks
   const selectedIndustryName = validIndustries
     .flatMap((i) => (Array.isArray(i.subIndustries) ? i.subIndustries : []))
     .find((i) => i?.id === selectedIndustry)?.name || "Select industry...";
@@ -66,8 +66,9 @@ export function IndustrySelect() {
             {validIndustries.map((industry) => (
               <CommandGroup key={industry.id} heading={industry.name}>
                 {Array.isArray(industry.subIndustries) &&
-                  industry.subIndustries.map((subIndustry) => (
-                    subIndustry && (
+                  industry.subIndustries
+                    .filter(Boolean) // Filter out any null/undefined entries
+                    .map((subIndustry) => (
                       <CommandItem
                         key={subIndustry.id}
                         value={subIndustry.id}
@@ -83,8 +84,7 @@ export function IndustrySelect() {
                         />
                         {subIndustry.name}
                       </CommandItem>
-                    )
-                  ))}
+                    ))}
               </CommandGroup>
             ))}
           </Command>
