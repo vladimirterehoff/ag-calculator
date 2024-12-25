@@ -15,6 +15,7 @@ export const Calculator = () => {
     handleFeatureToggle,
     handleFormChange,
     handleSubmit,
+    resetAllSelections,
   } = useCalculator();
 
   return (
@@ -46,6 +47,7 @@ export const Calculator = () => {
               formData={formData}
               onFormChange={handleFormChange}
               onSubmit={handleSubmit}
+              onSuccess={resetAllSelections}
             />
           </div>
         </div>
