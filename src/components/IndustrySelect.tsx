@@ -16,16 +16,7 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 
-type Industry = {
-  id: string;
-  name: string;
-  subIndustries: {
-    id: string;
-    name: string;
-  }[];
-};
-
-const industries: Industry[] = [
+const industries = [
   {
     id: "technology",
     name: "Technology",
@@ -65,9 +56,10 @@ export function IndustrySelect() {
     }
   };
 
+  // Find the selected industry name safely
   const selectedIndustryName = industries
     .flatMap(industry => industry.subIndustries)
-    .find(subIndustry => subIndustry.id === selectedIndustry)?.name || "Select industry...";
+    .find(subIndustry => subIndustry?.id === selectedIndustry)?.name || "Select industry...";
 
   return (
     <div className="flex items-center gap-4">
@@ -89,22 +81,24 @@ export function IndustrySelect() {
             <CommandEmpty>No industry found.</CommandEmpty>
             {industries.map((industry) => (
               <CommandGroup key={industry.id} heading={industry.name}>
-                {industry.subIndustries.map((subIndustry) => (
-                  <CommandItem
-                    key={subIndustry.id}
-                    value={subIndustry.id}
-                    onSelect={() => handleSelect(subIndustry.id)}
-                  >
-                    <Check
-                      className={cn(
-                        "mr-2 h-4 w-4",
-                        selectedIndustry === subIndustry.id
-                          ? "opacity-100"
-                          : "opacity-0"
-                      )}
-                    />
-                    {subIndustry.name}
-                  </CommandItem>
+                {Array.isArray(industry.subIndustries) && industry.subIndustries.map((subIndustry) => (
+                  subIndustry && (
+                    <CommandItem
+                      key={subIndustry.id}
+                      value={subIndustry.id}
+                      onSelect={() => handleSelect(subIndustry.id)}
+                    >
+                      <Check
+                        className={cn(
+                          "mr-2 h-4 w-4",
+                          selectedIndustry === subIndustry.id
+                            ? "opacity-100"
+                            : "opacity-0"
+                        )}
+                      />
+                      {subIndustry.name}
+                    </CommandItem>
+                  )
                 ))}
               </CommandGroup>
             ))}
